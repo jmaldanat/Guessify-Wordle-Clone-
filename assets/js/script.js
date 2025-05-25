@@ -173,4 +173,21 @@ function shadeKeyBoard(letter, color) {
     }
 }
 
+// ** Function to Generate Input On-screen Keyboard **//
+
+document.getElementById("keyboard-cont").addEventListener("click", (e) => { // Add a click event listener to the keyboard container
+    const target = e.target // Get the element that was clicked
+
+    if (!target.classList.contains("keyboard-button")) { // If the clicked element is not a keyboard button, do nothing
+        return
+    }
+    let key = target.textContent // Get the text content of the clicked button
+
+    if (key === "Del") { // If the button is the delete key
+        key = "Backspace" // Change it to "Backspace" to match keyboard event
+    } 
+
+    document.dispatchEvent(new KeyboardEvent("keyup", {'key': key})) // Simulate a keyup event with the corresponding key
+})
+
 initBoard()// Call the function to initialize the board when the script runs
