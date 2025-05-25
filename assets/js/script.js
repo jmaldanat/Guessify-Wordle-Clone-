@@ -153,4 +153,24 @@ function checkGuess () {
     }
 }
 
+// ** Function to shade the keyboard buttons **//
+
+function shadeKeyBoard(letter, color) {
+    for (const elem of document.getElementsByClassName("keyboard-button")) { // Loop through all keyboard buttons
+        if (elem.textContent === letter) { // If the button's text matches the letter
+            let oldColor = elem.style.backgroundColor // Get the current background color of the button
+            if (oldColor === 'green') { // If it's already green, don't overwrite
+                return
+            } 
+
+            if (oldColor === 'yellow' && color !== 'green') { // If it's yellow and not upgrading to green, don't overwrite
+                return
+            }
+
+            elem.style.backgroundColor = color // Set the button's background color
+            break // Stop looping after updating the correct button
+        }
+    }
+}
+
 initBoard()// Call the function to initialize the board when the script runs
