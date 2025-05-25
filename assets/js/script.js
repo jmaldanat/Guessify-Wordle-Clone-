@@ -57,4 +57,20 @@ document.addEventListener("keyup", (e) => { // Listen for keyup events on the wh
     }
 })
 
+// ** Function for inserting letters **//
+
+function insertLetter (pressedKey) {
+    if (nextLetter === 5) { // If already 5 letters in the current guess, do nothing
+        return
+    }
+    pressedKey = pressedKey.toLowerCase() // Convert the pressed key to lowercase
+
+    let row = document.getElementsByClassName("letter-row")[6 - guessesRemaining] // Get the current row based on guesses left
+    let box = row.children[nextLetter] // Get the next letter box in the row
+    box.textContent = pressedKey // Display the pressed letter in the box
+    box.classList.add("filled-box") // Add a class to style the filled box
+    currentGuess.push(pressedKey) // Add the letter to the current guess array
+    nextLetter += 1 // Move to the next letter position
+}
+
 initBoard()// Call the function to initialize the board when the script runs
