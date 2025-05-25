@@ -73,4 +73,15 @@ function insertLetter (pressedKey) {
     nextLetter += 1 // Move to the next letter position
 }
 
+// ** Function for deleting letters **//
+
+function deleteLetter () {
+    let row = document.getElementsByClassName("letter-row")[6 - guessesRemaining] // Get the current row based on guesses left
+    let box = row.children[nextLetter - 1] // Get the last filled letter box in the row
+    box.textContent = "" // Clear the letter from the box
+    box.classList.remove("filled-box") // Remove the filled style from the box
+    currentGuess.pop() // Remove the last letter from the current guess array
+    nextLetter -= 1 // Move back one position for the next letter
+}
+
 initBoard()// Call the function to initialize the board when the script runs
