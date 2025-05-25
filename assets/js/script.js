@@ -30,4 +30,31 @@ function initBoard() { // Function to initialize the game board
     }
 }
 
+// ** Arrow function to accept user input **//
+
+document.addEventListener("keyup", (e) => { // Listen for keyup events on the whole document
+
+    if (guessesRemaining === 0) { // If no guesses are left, do nothing
+        return
+    }
+
+    let pressedKey = String(e.key) // Get the key pressed as a string
+    if (pressedKey === "Backspace" && nextLetter !== 0) { // If Backspace is pressed and there are letters to delete
+        deleteLetter() // Call function to delete the last letter
+        return
+    }
+
+    if (pressedKey === "Enter") { // If Enter is pressed
+        checkGuess() // Call function to check the current guess
+        return
+    }
+
+    let found = pressedKey.match(/[a-z]/gi) // Check with RegEx if the pressed key is a letter (case-insensitive)
+    if (!found || found.length > 1) { // If not a single letter, ignore the input
+        return
+    } else {
+        insertLetter(pressedKey) // Otherwise, insert the letter into the current guess
+    }
+})
+
 initBoard()// Call the function to initialize the board when the script runs
