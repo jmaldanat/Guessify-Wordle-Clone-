@@ -1,3 +1,55 @@
-h1 {
- text-align: center;
+h1 { /* Styles the main heading */
+ text-align: center; /* Centers the text horizontally */
+}
+
+#game-board { /* Styles the game board container */
+  display: flex; /* Uses flexbox layout */
+  align-items: center; /* Centers items vertically */
+  flex-direction: column; /* Stacks children vertically */
+}
+
+.letter-box { /* Styles each letter box */
+  border: 2px solid gray; /* Gray border around each box */
+  border-radius: 3px; /* Slightly rounded corners */
+  margin: 2px; /* Space between boxes */
+  font-size: 2.5rem; /* Large font size for letters */
+  font-weight: 700; /* Bold text */
+  height: 3rem; /* Fixed height */
+  width: 3rem; /* Fixed width */
+  display: flex; /* Uses flexbox for content alignment */
+  justify-content: center; /* Centers content horizontally */
+  align-items: center; /* Centers content vertically */
+  text-transform: uppercase; /* Makes letters uppercase */
+}
+
+.filled-box { /* Styles for filled letter boxes */
+  border: 2px solid black; /* Black border for filled boxes */
+}
+
+.letter-row { /* Styles each row of letter boxes */
+  display: flex; /* Arranges boxes in a row */
+}
+
+#keyboard-cont {                /* Styles the keyboard container */
+  margin: 1rem 0;              /* Adds vertical margin above and below */
+  display: flex;               /* Uses flexbox layout */
+  flex-direction: column;      /* Arranges children in a column */
+  align-items: center;         /* Centers children horizontally */
+}
+
+#keyboard-cont div {           /* Styles each row inside the keyboard container */
+  display: flex;               /* Arranges buttons in a row using flexbox */
+}
+
+.second-row {                  /* Styles the second row of the keyboard */
+  margin: 0.5rem 0;            /* Adds vertical margin above and below */
+}
+
+.keyboard-button {             /* Styles each keyboard button */
+  font-size: 1rem;             /* Sets font size */
+  font-weight: 700;            /* Makes text bold */
+  padding: 0.5rem;             /* Adds padding inside the button */
+  margin: 0 2px;               /* Adds horizontal margin between buttons */
+  cursor: pointer;             /* Shows pointer cursor on hover */
+  text-transform: uppercase;   /* Makes button text uppercase */
 }
