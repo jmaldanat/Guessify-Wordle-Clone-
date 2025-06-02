@@ -86,68 +86,71 @@ function deleteLetter () {
 // ** Function to check the current guess **//
 
 function checkGuess () {
-    let row = document.getElementsByClassName("letter-row")[6 - guessesRemaining];
-    let guessString = '';
-    let rightGuess = Array.from(rightGuessString);
+    let row = document.getElementsByClassName("letter-row")[6 - guessesRemaining]; // Get the current row based on guesses left
+    let guessString = ''; // Initialize an empty string to build the guess
+    let rightGuess = Array.from(rightGuessString); // Convert the correct word to an array of letters
 
     for (const val of currentGuess) {
-        guessString += val;
+        guessString += val; // Build the guess string from the current guess array
     }
 
-    if (guessString.length != 5) {
-        alert("Not enough letters!");
-        return;
+    if (guessString.length != 5) { // If the guess is not 5 letters
+        alert("Not enough letters!"); // Alert the user
+        return; // Stop further execution
     }
 
-    if (!WORDS.includes(guessString)) {
-        alert("Word not in list!");
-        return;
+    if (!WORDS.includes(guessString)) { // If the guess is not in the word list
+        alert("Word not in list!"); // Alert the user
+        return; // Stop further execution
     }
 
-    let letterColors = Array(5).fill('grey');
-    let rightGuessCopy = Array.from(rightGuess);
+    let letterColors = Array(5).fill('grey'); // Initialize all letter colors as grey
+    let rightGuessCopy = Array.from(rightGuess); // Make a copy of the correct word array
 
+    // First pass: check for correct letters in the correct position (green)
     for (let i = 0; i < 5; i++) {
-        if (currentGuess[i] === rightGuess[i]) {
-            letterColors[i] = 'green';
-            rightGuessCopy[i] = null;
+        if (currentGuess[i] === rightGuess[i]) { // If the letter matches in the correct position
+            letterColors[i] = 'green'; // Set color to green
+            rightGuessCopy[i] = null; // Remove the matched letter from the copy
         }
     }
 
+    // Second pass: check for correct letters in the wrong position (yellow)
     for (let i = 0; i < 5; i++) {
-        if (letterColors[i] !== 'green') {
-            let letterIndex = rightGuessCopy.indexOf(currentGuess[i]);
-            if (letterIndex !== -1) {
-                letterColors[i] = 'yellow';
-                rightGuessCopy[letterIndex] = null;
+        if (letterColors[i] !== 'green') { // If not already marked green
+            let letterIndex = rightGuessCopy.indexOf(currentGuess[i]); // Find the letter in the copy
+            if (letterIndex !== -1) { // If found
+                letterColors[i] = 'yellow'; // Set color to yellow
+                rightGuessCopy[letterIndex] = null; // Remove the matched letter from the copy
             }
         }
     }
 
+    // Animate the coloring of the boxes and shade the keyboard
     for (let i = 0; i < 5; i++) {
-        let box = row.children[i];
-        let letter = currentGuess[i];
-        let delay = 250 * i;
+        let box = row.children[i]; // Get the box for this letter
+        let letter = currentGuess[i]; // Get the letter
+        let delay = 250 * i; // Set a delay for animation
         setTimeout(() => {
-            box.style.backgroundColor = letterColors[i];
-            shadeKeyBoard(letter, letterColors[i]);
+            box.style.backgroundColor = letterColors[i]; // Set the box background color
+            shadeKeyBoard(letter, letterColors[i]); // Shade the keyboard button
         }, delay);
     }
 
-    if (guessString === rightGuessString) {
+    if (guessString === rightGuessString) { // If the guess matches the correct word
         setTimeout(() => {
-            showWinModal(rightGuessString);
+            showWinModal(rightGuessString); // Show the win modal
         }, 1500);
-        guessesRemaining = 0;
-        return;
+        guessesRemaining = 0; // Set guesses remaining to 0 to end the game
+        return; // Stop further execution
     } else {
-        guessesRemaining -= 1;
-        currentGuess = [];
-        nextLetter = 0;
+        guessesRemaining -= 1; // Decrement the guesses remaining
+        currentGuess = []; // Reset the current guess array
+        nextLetter = 0; // Reset the next letter index
 
-        if (guessesRemaining === 0) {
+        if (guessesRemaining === 0) { // If no guesses are left
             setTimeout(() => {
-                showLoseModal(rightGuessString);
+                showLoseModal(rightGuessString); // Show the lose modal
             }, 1500);
         }
     }
@@ -251,32 +254,32 @@ function showLoseModal(word) {
 }
 
 // Win Modal Elements
-const winModal = document.createElement("div");
-winModal.id = "win-modal";
-winModal.className = "modal";
+const winModal = document.createElement("div"); // Create a new div for the win modal
+winModal.id = "win-modal"; // Set the id for the win modal
+winModal.className = "modal"; // Set the class for modal styling
 winModal.innerHTML = `
     <div class="modal-content">
         <span id="win-close-btn" class="close-btn">&times;</span>
         <h2>Congratulations!</h2>
         <p id="win-message"></p>
     </div>
-`;
-document.body.appendChild(winModal);
-const winMessage = document.getElementById("win-message");
-const winCloseBtn = document.getElementById("win-close-btn");
+`; // Set the inner HTML for the modal content
+document.body.appendChild(winModal); // Add the win modal to the body of the document
+const winMessage = document.getElementById("win-message"); // Get the element to display the win message
+const winCloseBtn = document.getElementById("win-close-btn"); // Get the close button for the win modal
 
 // Show win modal and refresh page after close
 function showWinModal(word) {
-    winMessage.textContent = `You guessed right! The word was: "${word.toUpperCase()}"`;
-    winModal.style.display = "block";
+    winMessage.textContent = `You guessed right! The word was: "${word.toUpperCase()}"`; // Set the win message with the correct word in uppercase
+    winModal.style.display = "block"; // Show the win modal
     function closeAndRefresh() {
-        winModal.style.display = "none";
-        window.location.reload();
+        winModal.style.display = "none"; // Hide the win modal
+        window.location.reload(); // Reload the page to restart the game
     }
-    winCloseBtn.onclick = closeAndRefresh;
-    window.onclick = function(event) {
-        if (event.target === winModal) {
-            closeAndRefresh();
+    winCloseBtn.onclick = closeAndRefresh; // When the close button is clicked, close modal and refresh
+    window.onclick = function(event) { // When anywhere on the window is clicked
+        if (event.target === winModal) { // If the click was outside the modal content (on the modal background)
+            closeAndRefresh(); // Close modal and refresh
         }
     };
 }
