@@ -1,4 +1,3 @@
-
 import { WORDS } from "./words.js"; // Import the list of possible words from words.js
 
 // ** Variables Initialization **//
@@ -39,7 +38,7 @@ document.addEventListener("keyup", (e) => { // Listen for keyup events on the wh
     }
 
     let pressedKey = String(e.key) // Get the key pressed as a string
-    if (pressedKey === "Backspace" && nextLetter !== 0) { // If Backspace is pressed and there are letters to delete
+    if ((pressedKey === "Backspace" || pressedKey === "Delete") && nextLetter !== 0) { // If Backspace or Delete is pressed and there are letters to delete
         deleteLetter() // Call function to delete the last letter
         return
     }
@@ -191,5 +190,41 @@ document.getElementById("keyboard-cont").addEventListener("click", (e) => { // A
 
     document.dispatchEvent(new KeyboardEvent("keyup", {'key': key})) // Simulate a keyup event with the corresponding key
 })
+
+// ** How to Play Modal Functions **//
+// Get modal elements
+const modal = document.getElementById("how-to-play-modal");
+const howToPlayBtn = document.getElementById("how-to-play-btn");
+const closeBtn = document.querySelector(".close-btn");
+
+// Open modal when button is clicked
+howToPlayBtn.addEventListener("click", () => {
+    modal.style.display = "block";
+});
+
+// Close modal when X is clicked
+closeBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+});
+
+// Close modal when clicking outside the modal content
+window.addEventListener("click", (e) => {
+    if (e.target === modal) {
+        modal.style.display = "none";
+    }
+});
+
+// Dark Mode Toggle
+const darkModeBtn = document.getElementById("dark-mode-btn");
+
+darkModeBtn.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+    if (document.body.classList.contains("dark-mode")) {
+        darkModeBtn.textContent = "☀️ Light Mode";
+    } else {
+        darkModeBtn.textContent = "🌙 Dark Mode";
+    }
+    darkModeBtn.blur(); // Quita el foco para evitar el toggle accidental con Enter
+});
 
 initBoard()// Call the function to initialize the board when the script runs

@@ -9,7 +9,35 @@
 </head>
 
 <body>
-    <h1>Guessify</h1>
+    <header>
+        <h1>Guessify</h1>
+        <div class="buttons-container">
+            <button id="how-to-play-btn">How to Play</button>
+            <button id="dark-mode-btn">🌙 Dark Mode</button>
+        </div>
+    </header>
+
+    <div id="how-to-play-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>How to Play Guessify</h2>
+            <ol>
+                <li>Guess the hidden 5-letter word in 6 tries or less.</li>
+                <li>Type a 5-letter word and press Enter to submit your guess.</li>
+                <li>After each guess, the color of the tiles will change:
+                    <ul>
+                        <li><span class="example-box green-box"></span> means the letter is correct and in the right position.</li>
+                        <li><span class="example-box yellow-box"></span> means the letter is in the word but in the wrong position.</li>
+                        <li><span class="example-box grey-box"></span> means the letter is not in the word.</li>
+                    </ul>
+                </li>
+                <li>Use Delete or the "Del" button to remove letters.</li>
+                <li>All guesses must be valid 5-letter words in our dictionary.</li>
+                <li>Letters can appear more than once in a word.</li>
+            </ol>
+            <p>Good luck!</p>
+        </div>
+    </div>
 
     <div id="game-board"></div>
 
