@@ -148,8 +148,9 @@ function checkGuess () {
         nextLetter = 0; // Reset the next letter position
 
         if (guessesRemaining === 0) { // If no guesses are left
-            alert("You've run out of guesses! Game over!"); // Alert the user
-            alert(`The right word was: "${rightGuessString}"`); // Show the correct word
+            setTimeout(() => {
+                showLoseModal(rightGuessString);
+            }, 1500);
         }
     }
 }
@@ -228,3 +229,25 @@ darkModeBtn.addEventListener("click", () => {
 });
 
 initBoard()// Call the function to initialize the board when the script runs
+
+// Lose Modal Elements
+const loseModal = document.getElementById("lose-modal");
+const loseMessage = document.getElementById("lose-message");
+const loseCloseBtn = document.getElementById("lose-close-btn");
+
+// Show lose modal and refresh page after close
+function showLoseModal(word) {
+    loseMessage.textContent = `The correct word was: "${word.toUpperCase()}"`;
+    loseModal.style.display = "block";
+    // Refresh page after closing the modal
+    function closeAndRefresh() {
+        loseModal.style.display = "none";
+        window.location.reload();
+    }
+    loseCloseBtn.onclick = closeAndRefresh;
+    window.onclick = function(event) {
+        if (event.target === loseModal) {
+            closeAndRefresh();
+        }
+    };
+}
