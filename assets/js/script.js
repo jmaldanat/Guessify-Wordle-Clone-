@@ -86,68 +86,66 @@ function deleteLetter () {
 // ** Function to check the current guess **//
 
 function checkGuess () {
-    let row = document.getElementsByClassName("letter-row")[6 - guessesRemaining]; // Get the current row based on guesses left
-    let guessString = ''; // Initialize an empty string to build the guess
-    let rightGuess = Array.from(rightGuessString); // Convert the correct word to an array
+    let row = document.getElementsByClassName("letter-row")[6 - guessesRemaining];
+    let guessString = '';
+    let rightGuess = Array.from(rightGuessString);
 
-    for (const val of currentGuess) { // Loop through each letter in the current guess
-        guessString += val; // Add each letter to the guess string
+    for (const val of currentGuess) {
+        guessString += val;
     }
 
-    if (guessString.length != 5) { // If the guess is not 5 letters
-        alert("Not enough letters!"); // Alert the user
-        return; // Stop further execution
+    if (guessString.length != 5) {
+        alert("Not enough letters!");
+        return;
     }
 
-    if (!WORDS.includes(guessString)) { // If the guess is not a valid word
-        alert("Word not in list!"); // Alert the user
-        return; // Stop further execution
+    if (!WORDS.includes(guessString)) {
+        alert("Word not in list!");
+        return;
     }
 
-    // --- NEW LOGIC TO PRIORITIZE GREENS OVER YELLOWS ---
-    let letterColors = Array(5).fill('grey'); // Initialize all colors as grey
-    let rightGuessCopy = Array.from(rightGuess); // Copy of the correct word array to track used letters
+    let letterColors = Array(5).fill('grey');
+    let rightGuessCopy = Array.from(rightGuess);
 
-    // First pass: mark greens (correct letter and position)
     for (let i = 0; i < 5; i++) {
         if (currentGuess[i] === rightGuess[i]) {
-            letterColors[i] = 'green'; // Mark as green
-            rightGuessCopy[i] = null; // Mark this letter as used
+            letterColors[i] = 'green';
+            rightGuessCopy[i] = null;
         }
     }
 
-    // Second pass: mark yellows (correct letter, wrong position)
     for (let i = 0; i < 5; i++) {
-        if (letterColors[i] !== 'green') { // Only check non-green positions
-            let letterIndex = rightGuessCopy.indexOf(currentGuess[i]); // Find the letter in the remaining letters
+        if (letterColors[i] !== 'green') {
+            let letterIndex = rightGuessCopy.indexOf(currentGuess[i]);
             if (letterIndex !== -1) {
-                letterColors[i] = 'yellow'; // Mark as yellow
-                rightGuessCopy[letterIndex] = null; // Mark this letter as used
+                letterColors[i] = 'yellow';
+                rightGuessCopy[letterIndex] = null;
             }
         }
     }
 
-    // Show colors with animation
     for (let i = 0; i < 5; i++) {
-        let box = row.children[i]; // Get the box for this letter
-        let letter = currentGuess[i]; // Get the letter
-        let delay = 250 * i; // Set a delay for the animation
+        let box = row.children[i];
+        let letter = currentGuess[i];
+        let delay = 250 * i;
         setTimeout(() => {
-            box.style.backgroundColor = letterColors[i]; // Set the box color
-            shadeKeyBoard(letter, letterColors[i]); // Shade the keyboard button
+            box.style.backgroundColor = letterColors[i];
+            shadeKeyBoard(letter, letterColors[i]);
         }, delay);
     }
 
-    if (guessString === rightGuessString) { // If the guess matches the correct word
-        alert("You guessed right! Game over!"); // Alert the user
-        guessesRemaining = 0; // Set guesses remaining to 0 to end the game
-        return; // Stop further execution
+    if (guessString === rightGuessString) {
+        setTimeout(() => {
+            showWinModal(rightGuessString);
+        }, 1500);
+        guessesRemaining = 0;
+        return;
     } else {
-        guessesRemaining -= 1; // Decrease the number of guesses remaining
-        currentGuess = []; // Reset the current guess array
-        nextLetter = 0; // Reset the next letter position
+        guessesRemaining -= 1;
+        currentGuess = [];
+        nextLetter = 0;
 
-        if (guessesRemaining === 0) { // If no guesses are left
+        if (guessesRemaining === 0) {
             setTimeout(() => {
                 showLoseModal(rightGuessString);
             }, 1500);
@@ -248,6 +246,37 @@ function showLoseModal(word) {
     window.onclick = function(event) { // When anywhere on the window is clicked
         if (event.target === loseModal) { // If the click was outside the modal content (on the modal background)
             closeAndRefresh(); // Close modal and refresh
+        }
+    };
+}
+
+// Win Modal Elements
+const winModal = document.createElement("div");
+winModal.id = "win-modal";
+winModal.className = "modal";
+winModal.innerHTML = `
+    <div class="modal-content">
+        <span id="win-close-btn" class="close-btn">&times;</span>
+        <h2>Congratulations!</h2>
+        <p id="win-message"></p>
+    </div>
+`;
+document.body.appendChild(winModal);
+const winMessage = document.getElementById("win-message");
+const winCloseBtn = document.getElementById("win-close-btn");
+
+// Show win modal and refresh page after close
+function showWinModal(word) {
+    winMessage.textContent = `You guessed right! The word was: "${word.toUpperCase()}"`;
+    winModal.style.display = "block";
+    function closeAndRefresh() {
+        winModal.style.display = "none";
+        window.location.reload();
+    }
+    winCloseBtn.onclick = closeAndRefresh;
+    window.onclick = function(event) {
+        if (event.target === winModal) {
+            closeAndRefresh();
         }
     };
 }

@@ -243,3 +243,15 @@ body:not(.dark-mode) #dark-mode-btn:hover {
   background-color: #e0e0e0;
   color: #407d3a;
 }
+
+/* Win Modal Styles */
+#win-modal .modal-content {
+  background-color: #e6ffe6;
+  color: #232d23;
+  border-color: #407d3a;
+}
+.dark-mode #win-modal .modal-content {
+  background-color: #1a2b1a;
+  color: #f5f5f5;
+  border-color: #407d3a;
+}
