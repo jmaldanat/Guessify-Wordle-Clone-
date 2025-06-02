@@ -194,60 +194,60 @@ document.getElementById("keyboard-cont").addEventListener("click", (e) => { // A
 
 // ** How to Play Modal Functions **//
 // Get modal elements
-const modal = document.getElementById("how-to-play-modal");
-const howToPlayBtn = document.getElementById("how-to-play-btn");
-const closeBtn = document.querySelector(".close-btn");
+const modal = document.getElementById("how-to-play-modal"); // Get the "how to play" modal element
+const howToPlayBtn = document.getElementById("how-to-play-btn"); // Get the button that opens the modal
+const closeBtn = document.querySelector(".close-btn"); // Get the close button inside the modal
 
 // Open modal when button is clicked
-howToPlayBtn.addEventListener("click", () => {
-    modal.style.display = "block";
+howToPlayBtn.addEventListener("click", () => { // When the "how to play" button is clicked
+    modal.style.display = "block"; // Show the modal
 });
 
 // Close modal when X is clicked
-closeBtn.addEventListener("click", () => {
-    modal.style.display = "none";
+closeBtn.addEventListener("click", () => { // When the close button is clicked
+    modal.style.display = "none"; // Hide the modal
 });
 
 // Close modal when clicking outside the modal content
-window.addEventListener("click", (e) => {
-    if (e.target === modal) {
-        modal.style.display = "none";
+window.addEventListener("click", (e) => { // Listen for clicks anywhere on the window
+    if (e.target === modal) { // If the click is on the modal background (not the content)
+        modal.style.display = "none"; // Hide the modal
     }
 });
 
 // Dark Mode Toggle
-const darkModeBtn = document.getElementById("dark-mode-btn");
+const darkModeBtn = document.getElementById("dark-mode-btn"); // Get the dark mode toggle button
 
-darkModeBtn.addEventListener("click", () => {
-    document.body.classList.toggle("dark-mode");
-    if (document.body.classList.contains("dark-mode")) {
-        darkModeBtn.textContent = "☀️ Light Mode";
+darkModeBtn.addEventListener("click", () => { // When the dark mode button is clicked
+    document.body.classList.toggle("dark-mode"); // Toggle the dark mode class on the body
+    if (document.body.classList.contains("dark-mode")) { // If dark mode is active
+        darkModeBtn.textContent = "☀️ Light Mode"; // Change button text to light mode
     } else {
-        darkModeBtn.textContent = "🌙 Dark Mode";
+        darkModeBtn.textContent = "🌙 Dark Mode"; // Otherwise, set text to dark mode
     }
-    darkModeBtn.blur(); // Quita el foco para evitar el toggle accidental con Enter
+    darkModeBtn.blur(); // Remove focus from the button to prevent accidental toggling with Enter
 });
 
-initBoard()// Call the function to initialize the board when the script runs
+initBoard() // Call the function to initialize the board when the script runs
 
 // Lose Modal Elements
-const loseModal = document.getElementById("lose-modal");
-const loseMessage = document.getElementById("lose-message");
-const loseCloseBtn = document.getElementById("lose-close-btn");
+const loseModal = document.getElementById("lose-modal"); // Get the lose modal element
+const loseMessage = document.getElementById("lose-message"); // Get the element to display the lose message
+const loseCloseBtn = document.getElementById("lose-close-btn"); // Get the close button for the lose modal
 
 // Show lose modal and refresh page after close
 function showLoseModal(word) {
-    loseMessage.textContent = `The correct word was: "${word.toUpperCase()}"`;
-    loseModal.style.display = "block";
+    loseMessage.textContent = `The correct word was: "${word.toUpperCase()}"`; // Set the lose message with the correct word in uppercase
+    loseModal.style.display = "block"; // Show the lose modal
     // Refresh page after closing the modal
     function closeAndRefresh() {
-        loseModal.style.display = "none";
-        window.location.reload();
+        loseModal.style.display = "none"; // Hide the lose modal
+        window.location.reload(); // Reload the page to restart the game
     }
-    loseCloseBtn.onclick = closeAndRefresh;
-    window.onclick = function(event) {
-        if (event.target === loseModal) {
-            closeAndRefresh();
+    loseCloseBtn.onclick = closeAndRefresh; // When the close button is clicked, close modal and refresh
+    window.onclick = function(event) { // When anywhere on the window is clicked
+        if (event.target === loseModal) { // If the click was outside the modal content (on the modal background)
+            closeAndRefresh(); // Close modal and refresh
         }
     };
 }
