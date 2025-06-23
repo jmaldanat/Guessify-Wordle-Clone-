@@ -172,7 +172,7 @@ ol li {
 .dark-mode .letter-box {
   background-color: #121213;
   border: 2px solid #3a3a3c;
-  color: #f5f5f5;
+  color: #DADADA; /* Changed for better contrast */
 }
 
 .dark-mode .filled-box {
